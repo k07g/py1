@@ -1,0 +1,14 @@
+{
+  "cSpell.words": [
+    "chdir",
+    "uvicorn",
+    "venv",
+    "boto3",
+    "botocore",
+    "fastapi",
+    "mangum",
+    "pydantic",
+    "dynamodb",
+    "apigatewayv2"
+  ]
+}
