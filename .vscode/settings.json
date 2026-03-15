@@ -9,6 +9,7 @@
     "mangum",
     "pydantic",
     "dynamodb",
-    "apigatewayv2"
+    "apigatewayv2",
+    "pytest"
   ]
 }
