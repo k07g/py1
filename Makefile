@@ -1,12 +1,8 @@
 .PHONY: help install install-dev test build push deploy update delete local local-db local-setup local-stop
 
 # 設定（環境変数で上書き可）
-AWS_REGION  ?= ap-northeast-1
-AWS_ACCOUNT ?= $(shell aws sts get-caller-identity --query Account --output text)
 IMAGE_NAME  ?= books-api
 IMAGE_TAG   ?= latest
-ECR_REPO     = $(AWS_ACCOUNT).dkr.ecr.$(AWS_REGION).amazonaws.com/$(IMAGE_NAME)
-IMAGE_URI    = $(ECR_REPO):$(IMAGE_TAG)
 
 VENV   := .venv
 PYTHON := $(VENV)/bin/python3
@@ -53,9 +49,3 @@ local-stop: ## DynamoDB Local を停止
 
 build: ## Docker イメージをマルチステージビルド
 	docker build -t $(IMAGE_NAME):$(IMAGE_TAG) .
-
-push: build ## ECR にログインしてイメージをプッシュ
-	aws ecr get-login-password --region $(AWS_REGION) \
-	  | docker login --username AWS --password-stdin $(ECR_REPO)
-	docker tag $(IMAGE_NAME):$(IMAGE_TAG) $(IMAGE_URI)
-	docker push $(IMAGE_URI)
