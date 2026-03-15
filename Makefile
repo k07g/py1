@@ -1,4 +1,4 @@
-.PHONY: help install build push deploy update delete local local-db local-setup local-stop
+.PHONY: help install install-dev test build push deploy update delete local local-db local-setup local-stop
 
 # 設定（環境変数で上書き可）
 AWS_REGION  ?= ap-northeast-1
@@ -26,6 +26,12 @@ $(VENV):
 
 install: $(VENV) ## 依存パッケージを仮想環境にインストール
 	$(PIP) install -r requirements.txt uvicorn
+
+install-dev: $(VENV) ## 開発・テスト用パッケージをインストール
+	$(PIP) install -r requirements-dev.txt uvicorn
+
+test: ## テストを実行
+	$(VENV)/bin/pytest tests/ -v
 
 local-db: ## DynamoDB Local をバックグラウンドで起動
 	docker compose up -d dynamodb-local
